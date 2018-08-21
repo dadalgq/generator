@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.maswx.business.user.dao.WxUserDao">
+
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		openid,idcard,phone,sex,user_type,platform_type,create_time
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="insertWxUser">
+	    <![CDATA[
+	        INSERT INTO wx_user ( 
+	        	openid,idcard,phone,sex,user_type,platform_type,create_time
+	        ) VALUES (
+	        	#{openid} ,
+	        	#{idcard} ,
+	        	#{phone} ,
+	        	#{sex} ,
+	        	#{userType} ,
+	        	#{platformType} ,
+	        	#{createTime} 
+	        )
+	    ]]>
+	</insert>
+
+	<!-- 批量保存 -->
+	<insert id="insertWxUserBatch">
+	    <![CDATA[
+	        INSERT INTO wx_user (
+	        	openid,idcard,phone,sex,user_type,platform_type,create_time
+	        ) VALUES 
+	         ]]>
+		<foreach item="item" collection="list" separator=",">
+			(
+						#{item.openid} ,
+						#{item.idcard} ,
+						#{item.phone} ,
+						#{item.sex} ,
+						#{item.userType} ,
+						#{item.platformType} ,
+						#{item.createTime} 
+			)
+		</foreach>
+
+	</insert>
+
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+			<if
+				test="idcard != null and idcard != ''">
+				idcard = #{idcard}
+				,
+			</if>
+			<if
+				test="phone != null and phone != ''">
+				phone = #{phone}
+				,
+			</if>
+			<if
+				test="sex != null and sex != ''">
+				sex = #{sex}
+				,
+			</if>
+			<if test="userType != null">
+				user_type = #{userType} ,
+			</if>
+			<if test="platformType != null">
+				platform_type = #{platformType} ,
+			</if>
+			<if
+				test="createTime != null and createTime != ''">
+				create_time = #{createTime}
+				
+			</if>
+		</set>
+	</sql>
+
+    <!-- 模糊查询这样： 字段名 LIKE CONCAT('%',CONCAT(#{model.userName},'%')) -->
+	<!-- where 条件组合 -->
+	<sql id="where_sql">
+		<where>
+			<if
+				test="wxUser.idcard != null and wxUser.idcard != ''">
+				idcard = #{wxUser.idcard}				 
+			</if>
+			<if
+				test="wxUser.phone != null and wxUser.phone != ''">
+				 and phone = #{wxUser.phone}				 
+			</if>
+			<if
+				test="wxUser.sex != null and wxUser.sex != ''">
+				 and sex = #{wxUser.sex}				 
+			</if>
+			<if test="wxUser.userType != null">
+				 and  user_type = #{wxUser.userType} 
+			</if>
+			<if test="wxUser.platformType != null">
+				 and  platform_type = #{wxUser.platformType} 
+			</if>
+			<if
+				test="wxUser.createTime != null and wxUser.createTime != ''">
+				 and create_time = #{wxUser.createTime}				 
+			</if>
+		</where>
+	</sql>
+
+	<!-- 修改 -->
+	<update id="updateWxUserById">
+		UPDATE wx_user
+		<include refid="update_sql" />
+		WHERE
+		openid =
+		#{openid} 	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="deleteWxUserById">
+		DELETE FROM wx_user
+		WHERE
+		openid = #{openid} 	</delete>
+
+
+
+	<!-- selsect -->
+	<select id="getWxUserById" resultType="com.maswx.business.user.model.WxUser">
+		SELECT
+		<include refid="columns" />
+		FROM wx_user
+		WHERE
+		openid = #{openid} 	</select>
+
+	<!-- selsect -->
+	<select id="getWxUsers" resultType="com.maswx.business.user.model.WxUser">
+		SELECT
+		<include refid="columns" />
+		FROM wx_user
+		<include refid="where_sql" />
+	</select>
+	
+			<!-- selsect -->
+	<select id="getWxUsersForPage" resultType="com.maswx.business.user.model.WxUser">
+		SELECT
+		<include refid="columns" />
+		FROM wx_user
+		<include refid="where_sql" />
+	</select>
+
+	<select id="getWxUsersByConditions" resultType="com.maswx.business.user.model.WxUser">
+		SELECT
+		<include refid="columns" />
+		FROM wx_user
+		WHERE 
+			1 =1
+		<foreach collection="conditions" item="condition">
+			{condition.exp}
+		</foreach>
+	</select>
+
+</mapper>
