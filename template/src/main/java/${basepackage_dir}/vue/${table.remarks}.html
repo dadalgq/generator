@@ -1,0 +1,11 @@
+<#assign className = table.className>
+<#assign classNameLower = className?uncap_first>
+
+<![CDATA[
+<#list table.columns as column>
+
+<el-col :span="4" class="textAlignRight">${column.remarks}</el-col>
+<el-col :span="8">{{detail.${column.columnNameLower} || '暂无' }} </el-col>
+
+</#list>
+]]>

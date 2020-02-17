@@ -1,0 +1,27 @@
+<#assign className = table.className>
+<#assign classNameLower = className?uncap_first>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${basepackage}.dao.${className}Dao">
+
+    <sql id="base${className}">
+        <![CDATA[
+		<#list table.columns as column>${column.sqlName}<#if column_has_next>,</#if></#list>
+	    ]]>
+    </sql>
+
+    <select id="get${className}Page" resultType="${basepackage}.model.${className}DO">
+        select
+        <include refid="base${className}"/>
+        from ${table.sqlName}
+    </select>
+
+    <select id="get${className}List" resultType="${basepackage}.dto.${className}DTO">
+        select
+        <![CDATA[
+		<#list table.columns as column>${column.sqlName}<#if column_has_next>,</#if></#list>
+	    ]]>
+        from ${table.sqlName}
+    </select>
+
+</mapper>

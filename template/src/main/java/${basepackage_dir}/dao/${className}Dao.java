@@ -1,35 +1,34 @@
-<#assign className = table.className>   
-<#assign classNameLower = className?uncap_first> 
-package ${basepackage}.dao;  
-import ${basepackage}.model.${className};
+package ${basepackage}.dao;
+
+import basic.framework.components.mybatis.dao.BasicCrudDao;
+import ${basepackage}.model.${className}DO;
+import ${basepackage}.dto.${className}DTO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-import java.util.List;
-import com.maswx.common.mybatis.QueryCondition;
 
 /**
- *  ${className}Dao ${table.remarks}
+ *  ${table.remarks}表数据库操作类
  *
+ * @author generator
  * @version : Ver 1.0
- * @date	: ${now?date}
+ * @date	: 2019-7-1
  */
 @Repository
-public interface ${className}Dao {
-	
-	int insert${className}(${className} ${className?uncap_first});
-	
-	int insert${className}Batch(List<${className}> list);
-	
-	<#if table.compositeIdColumns?has_content>int update${className}ById(${className} ${className?uncap_first});
-	
-	int delete${className}ById(<#list table.compositeIdColumns as column>@Param("${column.columnNameLower}")  ${column.javaType} ${column.columnNameLower} <#if column_has_next> , </#if> </#list>);
-	
- 	${className} get${className}ById(<#list table.compositeIdColumns as column>@Param("${column.columnNameLower}")  ${column.javaType} ${column.columnNameLower} <#if column_has_next> , </#if> </#list>);</#if>
+public interface ${className}Dao extends BasicCrudDao<${className}DO>{
 
- 	List<${className}> get${className}s(@Param("${className?uncap_first}")  ${className} ${className?uncap_first});
- 	
- 	List<${className}> get${className}sByConditions(@Param("conditions") List<QueryCondition> conditions);
+    /**
+     *  分页查询${table.remarks}数据
+     * @param pageable 分页对象
+     * @return ${table.remarks}数据
+     */
+    Page<${className}DO> get${className}Page(Pageable pageable);
+
+    /**
+     *  查询${table.remarks}列表
+     * @return
+     */
+    List<${className}DTO> get${className}List();
 
 }

@@ -1,30 +1,58 @@
-<#assign className = table.className>   
-<#assign classNameLower = className?uncap_first>   
-package ${basepackage}.service;
-import org.springframework.data.domain.Pageable;
-import ${basepackage}.model.${className};
+<#assign className = table.className>
+<#assign classNameLower = className?uncap_first>
+package com.lit.guard.record.service;
+
+import basic.framework.components.core.dto.PageDto;
+import ${basepackage}.dto.${className}DTO;
 import java.util.List;
-import com.maswx.common.page.Page;
 
 /**
- *  ${className}Service
+ *   ${table.remarks}服务接口类
  *
+ * @author generator
  * @version : Ver 1.0
- * @date	: ${now?date} 
+ * @date	: 2019-7-1
  */
 public interface ${className}Service {
-	
-	int insert${className}(${className} ${className?uncap_first});
-	
-	int insert${className}Batch(List<${className}> list);
-	
-	<#if table.compositeIdColumns?has_content>int update${className}ById(${className} ${className?uncap_first});
-	
-	int delete${className}ById(<#list table.compositeIdColumns as column>${column.javaType} ${column.columnNameLower}<#if column_has_next>, </#if></#list>);
-	
- 	${className} get${className}ById(<#list table.compositeIdColumns as column>${column.javaType} ${column.columnNameLower}<#if column_has_next>, </#if></#list>);</#if>
- 
- 	List<${className}> get${className}s(${className} ${className?uncap_first});
 
- 	Page<${className}> get${className}sForPage(${className} ${className?uncap_first}, Pageable pageable);
+    /**
+     *  新增${table.remarks}
+     * @param ${classNameLower}DTO ${table.remarks}传输对象
+     */
+    void insert${className}(${className}DTO ${classNameLower}DTO);
+
+    /**
+     *  修改${table.remarks}
+     * @param ${classNameLower}DTO ${table.remarks}传输对象
+     */
+    void update${className}(${className}DTO ${classNameLower}DTO);
+
+    /**
+     *  删除${table.remarks}
+     * @param bh ${table.remarks} bh
+     */
+    void delete${className}(String bh);
+
+    /**
+     *  分页查询
+     * @param page 页码
+     * @param limit 页面显示条数
+     * @param order 排序
+     * @param orderColumn 排序字段
+     * @return ${table.remarks}数据
+     */
+    PageDto<${className}DTO> get${className}Page(int page, int limit, String order, String orderColumn);
+
+    /**
+     *  获取${table.remarks}详情
+     * @param bh ${table.remarks} bh
+     * @return ${table.remarks}详情
+     */
+    ${className}DTO get${className}Info(String bh);
+
+    /**
+     *  获取${table.remarks}列表
+     * @return
+     */
+    List<${className}DTO> get${className}List();
 }
