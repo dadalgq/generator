@@ -1,0 +1,297 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>交通事故记录管理</title>
+<link href="../common/css/default.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css"
+	href="../common/js/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css"
+	href="../common/js/themes/icon.css" />
+<script type="text/javascript" src="../common/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../common/js/jquery.easyui.min.js"></script>
+ 
+
+<script type="text/javascript" src="../common/js/extends.js"></script>
+<script type="text/javascript" src="../common/js/common.js"></script>
+<script type="text/javascript"
+	src="..//lxAccidentRecord.js"></script>
+</head>
+<body class="easyui-layout">
+	<div id="body" region="center">
+		<!-- 查询条件区域 -->
+		<div id="search_lxAccidentRecord">
+			<div id="conditon">
+				<form id="searchForm">
+					<table border="0">
+						<tr> 							<td>警员编号：</td>
+							<td><input name="policeId" 
+								id="policeId" /></td> 							<td>事故时间：</td>
+							<td><input name="accidentTime"   class="easyui-datebox" 
+								id="accidentTime" /></td> 							<td>事故地点：</td>
+							<td><input name="accidentSite"   class="easyui-datebox" 
+								id="accidentSite" /></td> 							<td>事故天气：</td>
+							<td><input name="accidentWeather"   class="easyui-datebox" 
+								id="accidentWeather" /></td> 							<td>甲方车牌号：</td>
+							<td><input name="carNumFirst"   class="easyui-datebox" 
+								id="carNumFirst" /></td> 						</tr>
+						<tr>
+							<td>甲方当事人：</td>
+							<td><input name="userNameFirst"   class="easyui-datebox" 
+								id="userNameFirst" /></td> 							<td>甲方号码：</td>
+							<td><input name="phoneFirst"   class="easyui-datebox" 
+								id="phoneFirst" /></td> 							<td>甲方保险公司：</td>
+							<td><input name="insuranceFirst"   class="easyui-datebox" 
+								id="insuranceFirst" /></td> 							<td>甲方碰撞位置：</td>
+							<td><input name="positionFirst"   class="easyui-datebox" 
+								id="positionFirst" /></td> 							<td>甲方事故责任：</td>
+							<td><input name="liableFirst"   class="easyui-datebox" 
+								id="liableFirst" /></td> 						</tr>
+						<tr>
+							<td>乙方车牌号：</td>
+							<td><input name="carNumSecond"   class="easyui-datebox" 
+								id="carNumSecond" /></td> 							<td>乙方当事人：</td>
+							<td><input name="userNameSecond"   class="easyui-datebox" 
+								id="userNameSecond" /></td> 							<td>乙方号码：</td>
+							<td><input name="phoneSecond"   class="easyui-datebox" 
+								id="phoneSecond" /></td> 							<td>乙方保险公司：</td>
+							<td><input name="insuranceSecond"   class="easyui-datebox" 
+								id="insuranceSecond" /></td> 							<td>乙方碰撞位置：</td>
+							<td><input name="positionSecond"   class="easyui-datebox" 
+								id="positionSecond" /></td> 						</tr>
+						<tr>
+							<td>乙方事故责任：</td>
+							<td><input name="liableSecond"   class="easyui-datebox" 
+								id="liableSecond" /></td> 							<td>创建时间：</td>
+							<td><input name="createTime"   class="easyui-datebox" 
+								id="createTime" /></td> 							<td>更新时间：</td>
+							<td><input name="updateTime"   class="easyui-datebox" 
+								id="updateTime" /></td> 							<td>状态 0：正常 1：作废：</td>
+							<td><input name="status" 
+								id="status" /></td> 							<td>所属部门编号：</td>
+							<td><input name="deptId" 
+								id="deptId" /></td> 						</tr>
+						<tr>
+							<td>所属部门名称：</td>
+							<td><input name="deptName"   class="easyui-datebox" 
+								id="deptName" /></td>
+
+
+							<td style="width: 150px;"><a href="javascript:void(0)" id="searchButton"
+								class="easyui-linkbutton my-search-button" iconCls="icon-search"
+								plain="true">查询</a> <a href="javascript:void(0)" id="resetButton"
+								class="easyui-linkbutton my-search-button" iconCls="icon-reset"
+								plain="true">重置</a></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+			<span id="openOrClose">openOrClose</span>
+		</div>
+		<!-- 数据表格区域 -->
+		<table id="tt" style="table-layout: fixed;"></table>
+		<!-- 表格顶部工具按钮 -->
+		<div id="tt_btn">
+			<a href="javascript:void(0)" id="save" class="easyui-linkbutton"
+				iconCls="icon-add" plain="true">新增</a> <a href="javascript:void(0)"
+				id="update" class="easyui-linkbutton" iconCls="icon-edit"
+				plain="true">修改</a> <a href="javascript:void(0)" id="delete"
+				class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>
+		</div>
+	</div>
+	<!-- 用于弹出框 -->
+	<div id="parent_win" class="easyui-window">
+		<!-- 内容 -->
+		<div class="content">
+			<form id="saveForm" action="./insertLxAccidentRecord" method="post">
+				<table width="280" border="0" align="center" cellpadding="3">
+					<tr style="display: none;">
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>记录编号：</label></td>
+						<td width="200"><input type="text" 
+							name="id"
+							id="id" /></td>
+					</tr>
+					 
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>警员编号：</label></td>
+						<td width="200"><input type="text" 
+							name="policeId"
+							id="policeId" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>事故时间：</label></td>
+						<td width="200"><input type="text"   class="easyui-datetimebox"  
+							name="accidentTime"
+							id="accidentTime" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>事故地点：</label></td>
+						<td width="200"><input type="text"   class="easyui-datetimebox"  
+							name="accidentSite"
+							id="accidentSite" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>事故天气：</label></td>
+						<td width="200"><input type="text"   class="easyui-datetimebox"  
+							name="accidentWeather"
+							id="accidentWeather" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>甲方车牌号：</label></td>
+						<td width="200"><input type="text"   class="easyui-datetimebox"  
+							name="carNumFirst"
+							id="carNumFirst" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>甲方当事人：</label></td>
+						<td width="200"><input type="text"   class="easyui-datetimebox"  
+							name="userNameFirst"
+							id="userNameFirst" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>甲方号码：</label></td>
+						<td width="200"><input type="text"   class="easyui-datetimebox"  
+							name="phoneFirst"
+							id="phoneFirst" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>甲方保险公司：</label></td>
+						<td width="200"><input type="text"   class="easyui-datetimebox"  
+							name="insuranceFirst"
+							id="insuranceFirst" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>甲方碰撞位置：</label></td>
+						<td width="200"><input type="text"   class="easyui-datetimebox"  
+							name="positionFirst"
+							id="positionFirst" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>甲方事故责任：</label></td>
+						<td width="200"><input type="text"   class="easyui-datetimebox"  
+							name="liableFirst"
+							id="liableFirst" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>乙方车牌号：</label></td>
+						<td width="200"><input type="text"   class="easyui-datetimebox"  
+							name="carNumSecond"
+							id="carNumSecond" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>乙方当事人：</label></td>
+						<td width="200"><input type="text"   class="easyui-datetimebox"  
+							name="userNameSecond"
+							id="userNameSecond" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>乙方号码：</label></td>
+						<td width="200"><input type="text"   class="easyui-datetimebox"  
+							name="phoneSecond"
+							id="phoneSecond" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>乙方保险公司：</label></td>
+						<td width="200"><input type="text"   class="easyui-datetimebox"  
+							name="insuranceSecond"
+							id="insuranceSecond" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>乙方碰撞位置：</label></td>
+						<td width="200"><input type="text"   class="easyui-datetimebox"  
+							name="positionSecond"
+							id="positionSecond" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>乙方事故责任：</label></td>
+						<td width="200"><input type="text"   class="easyui-datetimebox"  
+							name="liableSecond"
+							id="liableSecond" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>创建时间：</label></td>
+						<td width="200"><input type="text"   class="easyui-datetimebox"  
+							name="createTime"
+							id="createTime" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>更新时间：</label></td>
+						<td width="200"><input type="text"   class="easyui-datetimebox"  
+							name="updateTime"
+							id="updateTime" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>状态 0：正常 1：作废：</label></td>
+						<td width="200"><input type="text" 
+							name="status"
+							id="status" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>所属部门编号：</label></td>
+						<td width="200"><input type="text" 
+							name="deptId"
+							id="deptId" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>所属部门名称：</label></td>
+						<td width="200"><input type="text"   class="easyui-datetimebox"  
+							name="deptName"
+							id="deptName" /></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<!-- 弹出框按钮 -->
+		<div class="windowButton">
+			<a id="addLxAccidentRecord_save"
+				class="easyui-linkbutton my-dialog-button" plain="true"
+				icon="icon-save" href="javascript:void(0)"> 保存</a> <a
+				id="addLxAccidentRecord_cancel"
+				class="easyui-linkbutton my-dialog-button" plain="true"
+				icon="icon-cancel" href="javascript:void(0)">取消</a>
+		</div>
+	</div>
+</body>
+</html>

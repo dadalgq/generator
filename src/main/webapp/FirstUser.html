@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>用户信息管理</title>
+<link href="../common/css/default.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css"
+	href="../common/js/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css"
+	href="../common/js/themes/icon.css" />
+<script type="text/javascript" src="../common/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../common/js/jquery.easyui.min.js"></script>
+ 
+
+<script type="text/javascript" src="../common/js/extends.js"></script>
+<script type="text/javascript" src="../common/js/common.js"></script>
+<script type="text/javascript"
+	src="..//firstUser.js"></script>
+</head>
+<body class="easyui-layout">
+	<div id="body" region="center">
+		<!-- 查询条件区域 -->
+		<div id="search_firstUser">
+			<div id="conditon">
+				<form id="searchForm">
+					<table border="0">
+						<tr> 							<td>用户姓名：</td>
+							<td><input name="userName" 
+								id="userName" /></td> 							<td>所属部门Id：</td>
+							<td><input name="deptId" 
+								id="deptId" /></td> 							<td>上级领导ID：</td>
+							<td><input name="leaderId" 
+								id="leaderId" /></td> 							<td>令牌：</td>
+							<td><input name="token" 
+								id="token" /></td> 							<td>用户头像地址：</td>
+							<td><input name="avatarUrl" 
+								id="avatarUrl" /></td> 						</tr>
+						<tr>
+							<td>标识：</td>
+							<td><input name="sign" 
+								id="sign" /></td> 							<td>领导姓名：</td>
+							<td><input name="leaderName" 
+								id="leaderName" /></td> 							<td>部门名称：</td>
+							<td><input name="deptName" 
+								id="deptName" /></td> 							<td>领导头像地址：</td>
+							<td><input name="leaderAvatarUrl" 
+								id="leaderAvatarUrl" /></td> 							<td>角色权限Id(0,普通员工；1,部门负责人；2,企业拥有者)：</td>
+							<td><input name="roleId" 
+								id="roleId" /></td> 						</tr>
+						<tr>
+							<td>是否在职 0：在职 1：离职：</td>
+							<td><input name="del" 
+								id="del" /></td>
+
+
+							<td style="width: 150px;"><a href="javascript:void(0)" id="searchButton"
+								class="easyui-linkbutton my-search-button" iconCls="icon-search"
+								plain="true">查询</a> <a href="javascript:void(0)" id="resetButton"
+								class="easyui-linkbutton my-search-button" iconCls="icon-reset"
+								plain="true">重置</a></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+			<span id="openOrClose">openOrClose</span>
+		</div>
+		<!-- 数据表格区域 -->
+		<table id="tt" style="table-layout: fixed;"></table>
+		<!-- 表格顶部工具按钮 -->
+		<div id="tt_btn">
+			<a href="javascript:void(0)" id="save" class="easyui-linkbutton"
+				iconCls="icon-add" plain="true">新增</a> <a href="javascript:void(0)"
+				id="update" class="easyui-linkbutton" iconCls="icon-edit"
+				plain="true">修改</a> <a href="javascript:void(0)" id="delete"
+				class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>
+		</div>
+	</div>
+	<!-- 用于弹出框 -->
+	<div id="parent_win" class="easyui-window">
+		<!-- 内容 -->
+		<div class="content">
+			<form id="saveForm" action="./insertFirstUser" method="post">
+				<table width="280" border="0" align="center" cellpadding="3">
+					<tr style="display: none;">
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>用户ID：</label></td>
+						<td width="200"><input type="text" 
+							name="userId"
+							id="userId" /></td>
+					</tr>
+					 
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>用户姓名：</label></td>
+						<td width="200"><input type="text" 
+							name="userName"
+							id="userName" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>所属部门Id：</label></td>
+						<td width="200"><input type="text" 
+							name="deptId"
+							id="deptId" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>上级领导ID：</label></td>
+						<td width="200"><input type="text" 
+							name="leaderId"
+							id="leaderId" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>令牌：</label></td>
+						<td width="200"><input type="text" 
+							name="token"
+							id="token" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>用户头像地址：</label></td>
+						<td width="200"><input type="text" 
+							name="avatarUrl"
+							id="avatarUrl" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>标识：</label></td>
+						<td width="200"><input type="text" 
+							name="sign"
+							id="sign" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>领导姓名：</label></td>
+						<td width="200"><input type="text" 
+							name="leaderName"
+							id="leaderName" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>部门名称：</label></td>
+						<td width="200"><input type="text" 
+							name="deptName"
+							id="deptName" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>领导头像地址：</label></td>
+						<td width="200"><input type="text" 
+							name="leaderAvatarUrl"
+							id="leaderAvatarUrl" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>角色权限Id(0,普通员工；1,部门负责人；2,企业拥有者)：</label></td>
+						<td width="200"><input type="text" 
+							name="roleId"
+							id="roleId" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>是否在职 0：在职 1：离职：</label></td>
+						<td width="200"><input type="text" 
+							name="del"
+							id="del" /></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<!-- 弹出框按钮 -->
+		<div class="windowButton">
+			<a id="addFirstUser_save"
+				class="easyui-linkbutton my-dialog-button" plain="true"
+				icon="icon-save" href="javascript:void(0)"> 保存</a> <a
+				id="addFirstUser_cancel"
+				class="easyui-linkbutton my-dialog-button" plain="true"
+				icon="icon-cancel" href="javascript:void(0)">取消</a>
+		</div>
+	</div>
+</body>
+</html>

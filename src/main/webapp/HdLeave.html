@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>请假申请记录管理</title>
+<link href="../common/css/default.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css"
+	href="../common/js/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css"
+	href="../common/js/themes/icon.css" />
+<script type="text/javascript" src="../common/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../common/js/jquery.easyui.min.js"></script>
+ 
+
+<script type="text/javascript" src="../common/js/extends.js"></script>
+<script type="text/javascript" src="../common/js/common.js"></script>
+<script type="text/javascript"
+	src="..//hdLeave.js"></script>
+</head>
+<body class="easyui-layout">
+	<div id="body" region="center">
+		<!-- 查询条件区域 -->
+		<div id="search_hdLeave">
+			<div id="conditon">
+				<form id="searchForm">
+					<table border="0">
+						<tr> 							<td>事由：</td>
+							<td><input name="title" 
+								id="title" /></td> 							<td>开始时间：</td>
+							<td><input name="startTime" 
+								id="startTime" /></td> 							<td>结束时间：</td>
+							<td><input name="endTime" 
+								id="endTime" /></td> 							<td>类型 0:事假 1:病假 2:休假 3:婚假 4:产假 5:丧假 6:其他：</td>
+							<td><input name="type" 
+								id="type" /></td> 							<td>申请时间：</td>
+							<td><input name="applyTime" 
+								id="applyTime" /></td> 						</tr>
+						<tr>
+							<td>审批状态 0：待审批 1：已通过 2：已驳回：</td>
+							<td><input name="status" 
+								id="status" /></td> 							<td>创建时间：</td>
+							<td><input name="createTime" 
+								id="createTime" /></td> 							<td>用户id：</td>
+							<td><input name="userId" 
+								id="userId" /></td> 							<td>用户名：</td>
+							<td><input name="userName" 
+								id="userName" /></td> 							<td>部门id：</td>
+							<td><input name="deptId" 
+								id="deptId" /></td> 						</tr>
+						<tr>
+							<td>部门名称：</td>
+							<td><input name="deptName" 
+								id="deptName" /></td> 							<td>审批序号：</td>
+							<td><input name="level" 
+								id="level" /></td> 							<td>开始时刻：</td>
+							<td><input name="startHm" 
+								id="startHm" /></td> 							<td>结束时刻：</td>
+							<td><input name="endHm" 
+								id="endHm" /></td> 							<td>作废状态 0：正常 1：删除：</td>
+							<td><input name="del" 
+								id="del" /></td>
+
+
+							<td style="width: 150px;"><a href="javascript:void(0)" id="searchButton"
+								class="easyui-linkbutton my-search-button" iconCls="icon-search"
+								plain="true">查询</a> <a href="javascript:void(0)" id="resetButton"
+								class="easyui-linkbutton my-search-button" iconCls="icon-reset"
+								plain="true">重置</a></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+			<span id="openOrClose">openOrClose</span>
+		</div>
+		<!-- 数据表格区域 -->
+		<table id="tt" style="table-layout: fixed;"></table>
+		<!-- 表格顶部工具按钮 -->
+		<div id="tt_btn">
+			<a href="javascript:void(0)" id="save" class="easyui-linkbutton"
+				iconCls="icon-add" plain="true">新增</a> <a href="javascript:void(0)"
+				id="update" class="easyui-linkbutton" iconCls="icon-edit"
+				plain="true">修改</a> <a href="javascript:void(0)" id="delete"
+				class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>
+		</div>
+	</div>
+	<!-- 用于弹出框 -->
+	<div id="parent_win" class="easyui-window">
+		<!-- 内容 -->
+		<div class="content">
+			<form id="saveForm" action="./insertHdLeave" method="post">
+				<table width="280" border="0" align="center" cellpadding="3">
+					<tr style="display: none;">
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>编号：</label></td>
+						<td width="200"><input type="text" 
+							name="id"
+							id="id" /></td>
+					</tr>
+					 
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>事由：</label></td>
+						<td width="200"><input type="text" 
+							name="title"
+							id="title" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>开始时间：</label></td>
+						<td width="200"><input type="text" 
+							name="startTime"
+							id="startTime" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>结束时间：</label></td>
+						<td width="200"><input type="text" 
+							name="endTime"
+							id="endTime" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>类型 0:事假 1:病假 2:休假 3:婚假 4:产假 5:丧假 6:其他：</label></td>
+						<td width="200"><input type="text" 
+							name="type"
+							id="type" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>申请时间：</label></td>
+						<td width="200"><input type="text" 
+							name="applyTime"
+							id="applyTime" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>审批状态 0：待审批 1：已通过 2：已驳回：</label></td>
+						<td width="200"><input type="text" 
+							name="status"
+							id="status" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>创建时间：</label></td>
+						<td width="200"><input type="text" 
+							name="createTime"
+							id="createTime" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>用户id：</label></td>
+						<td width="200"><input type="text" 
+							name="userId"
+							id="userId" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>用户名：</label></td>
+						<td width="200"><input type="text" 
+							name="userName"
+							id="userName" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>部门id：</label></td>
+						<td width="200"><input type="text" 
+							name="deptId"
+							id="deptId" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>部门名称：</label></td>
+						<td width="200"><input type="text" 
+							name="deptName"
+							id="deptName" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>审批序号：</label></td>
+						<td width="200"><input type="text" 
+							name="level"
+							id="level" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>开始时刻：</label></td>
+						<td width="200"><input type="text" 
+							name="startHm"
+							id="startHm" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>结束时刻：</label></td>
+						<td width="200"><input type="text" 
+							name="endHm"
+							id="endHm" /></td>
+					</tr>
+
+					<tr>
+						<td width="100" align="right"><label for="userName"><span
+								class="x">*</span>作废状态 0：正常 1：删除：</label></td>
+						<td width="200"><input type="text" 
+							name="del"
+							id="del" /></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<!-- 弹出框按钮 -->
+		<div class="windowButton">
+			<a id="addHdLeave_save"
+				class="easyui-linkbutton my-dialog-button" plain="true"
+				icon="icon-save" href="javascript:void(0)"> 保存</a> <a
+				id="addHdLeave_cancel"
+				class="easyui-linkbutton my-dialog-button" plain="true"
+				icon="icon-cancel" href="javascript:void(0)">取消</a>
+		</div>
+	</div>
+</body>
+</html>
