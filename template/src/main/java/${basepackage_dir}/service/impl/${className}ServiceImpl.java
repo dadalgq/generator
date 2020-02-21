@@ -100,7 +100,11 @@ public class ${className}ServiceImpl implements ${className}Service {
     @Override
     public ${className}DTO get${className}Info(Long id) {
         ${className}DTO ${classNameLower}DTO = new ${className}DTO();
-        BeanUtils.copyProperties(${classNameLower}Dao.getById(id), ${classNameLower}DTO);
+        ${className}DO ${classNameLower}DO = ${classNameLower}Dao.getById(id);
+        if(null == ${classNameLower}DO){
+            throw BaseException.create("090005");
+        }
+        BeanUtils.copyProperties(${classNameLower}DO, ${classNameLower}DTO);
         return ${classNameLower}DTO;
     }
 
