@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
  * @version : Ver 1.0
  * @date	: 2019-07-01
  */
-@Api(value = "${className}Controller", tags = {"${table.remarks}接口"}, description = "${table.remarks}接口")
+@Api(value = "${className}Controller", tags = {"${table.remarks}接口"})
 @RequestMapping("/${classNameLower}")
 @RestController
 public class ${className}Controller {
@@ -43,11 +43,11 @@ public class ${className}Controller {
 
     @ApiOperation(value = "删除${table.remarks}", notes = "删除${table.remarks}")
     @RequestMapping(value = "/delete${className}", method = RequestMethod.DELETE)
-    public void delete${className}(@ApiParam("编号数组") @RequestParam("bh") String id){
+    public void delete${className}(@ApiParam("编号数组") @RequestParam("id") Long id){
         ${classNameLower}Service.delete${className}(id);
     }
 
-    @ApiOperation("分页查询${table.remarks}")
+    @ApiOperation(value = "分页查询${table.remarks}", notes = "分页查询${table.remarks}")
     @RequestMapping(method = RequestMethod.GET,value = "/get${className}Page")
     public PageDto<${className}DTO> get${className}Page(@ApiParam("分页页码")@RequestParam(required = false,defaultValue= GeneralConstant.PageColumn.SEARCH_PAGE) int page,
                                                        @ApiParam("页面条数")@RequestParam(required = false,defaultValue= GeneralConstant.PageColumn.SEARCH_LIMIT) int limit,
@@ -65,7 +65,7 @@ public class ${className}Controller {
 
     @ApiOperation(value = "获取${table.remarks}详情", notes = "获取${table.remarks}详情")
     @RequestMapping(value = "/get${className}Info", method = RequestMethod.GET)
-    public ${className}DTO get${className}Info(@ApiParam("编号")@RequestParam("bh") String bh){
-        return ${classNameLower}Service.get${className}Info(bh);
+    public ${className}DTO get${className}Info(@ApiParam("编号")@RequestParam("id") Long id){
+        return ${classNameLower}Service.get${className}Info(id);
     }
 }

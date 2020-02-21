@@ -60,11 +60,11 @@ public class ${className}ServiceImpl implements ${className}Service {
     /**
      * 删除${table.remarks}
      *
-     * @param bh ${table.remarks} bh数组
+     * @param id ${table.remarks} id
      */
     @Override
-    public void delete${className}(String bh) {
-        ${classNameLower}Dao.deleteById(bh);
+    public void delete${className}(Long id) {
+        ${classNameLower}Dao.deleteById(id);
     }
 
     /**
@@ -94,13 +94,13 @@ public class ${className}ServiceImpl implements ${className}Service {
     /**
      * 获取${table.remarks}详情
      *
-     * @param bh ${table.remarks} bh
+     * @param id ${table.remarks} id
      * @return ${table.remarks}详情
      */
     @Override
-    public ${className}DTO get${className}Info(String bh) {
+    public ${className}DTO get${className}Info(Long id) {
         ${className}DTO ${classNameLower}DTO = new ${className}DTO();
-        BeanUtils.copyProperties(${classNameLower}Dao.getById(bh), ${classNameLower}DTO);
+        BeanUtils.copyProperties(${classNameLower}Dao.getById(id), ${classNameLower}DTO);
         return ${classNameLower}DTO;
     }
 

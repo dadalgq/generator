@@ -29,9 +29,9 @@ public interface ${className}Service {
 
     /**
      *  删除${table.remarks}
-     * @param bh ${table.remarks} bh
+     * @param id ${table.remarks} id
      */
-    void delete${className}(String bh);
+    void delete${className}(Long id);
 
     /**
      *  分页查询
@@ -45,10 +45,10 @@ public interface ${className}Service {
 
     /**
      *  获取${table.remarks}详情
-     * @param bh ${table.remarks} bh
+     * @param id ${table.remarks} id
      * @return ${table.remarks}详情
      */
-    ${className}DTO get${className}Info(String bh);
+    ${className}DTO get${className}Info(Long id);
 
     /**
      *  获取${table.remarks}列表
